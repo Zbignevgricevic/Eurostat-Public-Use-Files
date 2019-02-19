@@ -1,0 +1,335 @@
+---
+title: "EU SILC PUF Data Management"
+author: "Zbignev Gricevic"
+date: "19 février 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Uploading packages
+
+Uploading pre-installed packages needed for data management of EU SILC public use files.
+
+```{r echo=TRUE, warning=FALSE, message=FALSE}
+packages<-c("plyr", "dplyr", "colr", "ggplot2", "plotly", "data.table")
+lapply(packages, library, character.only = TRUE)
+```
+
+# Working Directory 
+
+Setting working directory.
+
+```{r echo=TRUE, warning=FALSE}
+setwd("/home/gricezb/data/EU Silc/")
+```
+
+#Household Files
+
+Uploading and merging household register and household files.
+
+##Household Register (d) files.
+
+Creating list of household register files (temp_d) stored in the 
+working directory. Reading in the files into working Environment. 
+Binding files into one large list (d_files). Removing objects used
+to create this list from the working environment.
+
+```{r echo=TRUE, warning=FALSE, message=FALSE}
+temp_d=list.files(pattern = "*d_EUSILC.csv")
+for (i in 1:length(temp_d)) assign(temp_d[i], fread(temp_d[i]))
+d_files<-mget(ls(pattern = "*d_EUSILC.csv"))
+rm(list=ls(pattern="d_EUSILC.csv"), temp_d)
+invisible(gc())
+```
+
+Appending list of household register files (d_files) into single 
+data table (d_files_all). Removing list of files from the working
+environment.
+
+```{r echo=TRUE, warning=FALSE}
+d_files_all<-rbindlist(d_files,  fill = TRUE)
+rm(d_files)
+invisible(gc())
+```
+
+One country (Greece) has two different names in the variable storing 
+country codes (DB020). For some years Greece is coded as "GR" and for 
+other years as "EL". To reduce confusion we recode all instances of "GR"
+to "EL".
+
+```{r echo=TRUE, warning=FALSE}
+d_files_all$DB020[d_files_all$DB020=="GR"] <- "EL"
+```
+
+Exporting household register file to working directory and temporarily
+removing it from working environment.
+
+```{r echo=TRUE, warning=FALSE}
+saveRDS(d_files_all, "d_files_all.rds")
+rm(d_files_all)
+invisible(gc())
+```
+
+##Household (h) files.
+
+Creating list of household files (temp_h) stored in the 
+working directory. Reading in the files into working Environment. 
+Binding files into one large list (h_files). Removing objects used
+to create this list from the working environment.
+
+```{r echo=TRUE, warning=FALSE, message=FALSE}
+temp_h=list.files(pattern = "*h_EUSILC.csv")
+for (i in 1:length(temp_h)) assign(temp_h[i], fread(temp_h[i]))
+h_files<-mget(ls(pattern = "*h_EUSILC.csv"))
+rm(list=ls(pattern="h_EUSILC.csv"), temp_h)
+invisible(gc())
+```
+
+Appending list of household files (h_files) into single 
+data table (h_files_all). Removing list of files from the working
+environment.
+
+```{r echo=TRUE, warning=FALSE}
+h_files_all<-rbindlist(h_files,  fill = TRUE)
+rm(h_files)
+invisible(gc())
+```
+
+One country (Greece) has two different names in the variable storing 
+country codes (HB020). For some years Greece is coded as "GR" and for 
+other years as "EL". To reduce confusion we recode all instances of "GR"
+to "EL".
+
+```{r echo=TRUE, warning=FALSE}
+h_files_all$HB020[h_files_all$HB020=="GR"] <- "EL"
+```
+
+Exporting household file to working directory and temporarily
+removing it from working environment.
+
+```{r echo=TRUE, warning=FALSE}
+saveRDS(h_files_all, "h_files_all.rds")
+rm(h_files_all)
+invisible(gc())
+```
+
+##Merging Household Register and Household Files
+
+Uploading household register (d_files_all) and household (h_files_all) cumulative files.
+
+```{r echo=TRUE, warning=FALSE}
+d_files_all<-readRDS("d_files_all.rds")
+h_files_all<-readRDS("h_files_all.rds")
+```
+
+Information on Year, Country and Household ID will be used to merge household register (d_files_all) 
+and household (h_files_all) cumulative files. Renaming these variables to have common names in both
+data.tables.
+
+```{r echo=TRUE, warning=FALSE}
+d_files_all<-setnames(d_files_all, old=c("DB010","DB020", "DB030"), new=c("Year", "Country", "HHID"))
+h_files_all<-setnames(h_files_all, old=c("HB010","HB020", "HB030"), new=c("Year", "Country", "HHID"))
+```
+
+Merging household register and household files into cumulative file. Removing files used to
+do merging from the working environment.
+
+```{r echo=TRUE, warning=FALSE}
+household_file <- merge(d_files_all, h_files_all, by = c("Country", "HHID", "Year"), all = TRUE)
+rm(d_files_all, h_files_all)
+invisible(gc())
+```
+
+Exporting cumulative household file to working directory and temporarily
+removing it from working environment.
+
+```{r echo=TRUE, warning=FALSE}
+saveRDS(household_file, "household_file.rds")
+rm(household_file)
+invisible(gc())
+```
+
+#Personal Files
+
+Uploading and merging personal register and personal files.
+
+##Personal Register (r) files.
+
+Creating list of personal register files (temp_r) stored in the 
+working directory. Reading in the files into working Environment. 
+Binding files into one large list (r_files). Removing objects used
+to create this list from the working environment.
+
+```{r echo=TRUE, warning=FALSE, message=FALSE}
+temp_r=list.files(pattern = "*r_EUSILC.csv")
+for (i in 1:length(temp_r)) assign(temp_r[i], fread(temp_r[i]))
+r_files<-mget(ls(pattern = "*r_EUSILC.csv"))
+rm(list=ls(pattern="r_EUSILC.csv"), temp_r)
+invisible(gc())
+```
+
+Appending list of household register files (r_files) into single 
+data table (r_files_all). Removing list of files from the working
+environment.
+
+```{r echo=TRUE, warning=FALSE}
+r_files_all<-rbindlist(r_files,  fill = TRUE)
+rm(r_files)
+invisible(gc())
+```
+
+One country (Greece) has two different names in the variable storing 
+country codes (RB020). For some years Greece is coded as "GR" and for 
+other years as "EL". To reduce confusion we recode all instances of "GR"
+to "EL".
+
+```{r echo=TRUE, warning=FALSE}
+r_files_all$RB020[r_files_all$RB020=="GR"] <- "EL"
+```
+
+A list of variables is named in uppercase in some years and in lowercase
+in other years. To reduce confusion, these variables are renamed to uppercase.
+
+```{r echo=TRUE, warning=FALSE}
+colnames(r_files_all)[colnames(r_files_all)=="rl010"] <- "RL010"
+colnames(r_files_all)[colnames(r_files_all)=="rl020"] <- "RL020"
+colnames(r_files_all)[colnames(r_files_all)=="rl030"] <- "RL030"
+colnames(r_files_all)[colnames(r_files_all)=="rl040"] <- "RL040"
+colnames(r_files_all)[colnames(r_files_all)=="rl050"] <- "RL050"
+colnames(r_files_all)[colnames(r_files_all)=="rl060"] <- "RL060"
+colnames(r_files_all)[colnames(r_files_all)=="rl070"] <- "RL070"
+colnames(r_files_all)[colnames(r_files_all)=="rl010_f"] <- "RL010_F"
+colnames(r_files_all)[colnames(r_files_all)=="rl020_f"] <- "RL020_F"
+colnames(r_files_all)[colnames(r_files_all)=="rl030_f"] <- "RL030_F"
+colnames(r_files_all)[colnames(r_files_all)=="rl040_f"] <- "RL040_F"
+colnames(r_files_all)[colnames(r_files_all)=="rl050_f"] <- "RL050_F"
+colnames(r_files_all)[colnames(r_files_all)=="rl060_f"] <- "RL060_F"
+colnames(r_files_all)[colnames(r_files_all)=="rl070_f"] <- "RL070_F"
+```
+
+Exporting household register file to working directory and temporarily
+removing it from working environment.
+
+```{r echo=TRUE, warning=FALSE}
+saveRDS(r_files_all, "r_files_all.rds")
+rm(r_files_all)
+invisible(gc())
+```
+
+##Personal (p) files.
+
+Creating list of personal register files (temp_p) stored in the 
+working directory. Reading in the files into working Environment. 
+Binding files into one large list (p_files). Removing objects used
+to create this list from the working environment.
+
+```{r echo=TRUE, warning=FALSE, message=FALSE}
+temp_p=list.files(pattern = "*p_EUSILC.csv")
+for (i in 1:length(temp_p)) assign(temp_p[i], fread(temp_p[i]))
+p_files<-mget(ls(pattern = "*p_EUSILC.csv"))
+rm(list=ls(pattern="p_EUSILC.csv"), temp_p)
+invisible(gc())
+```
+
+Appending list of personal files (p_files) into single 
+data table (p_files_all). Removing list of files from the working
+environment.
+
+```{r echo=TRUE, warning=FALSE}
+p_files_all<-rbindlist(p_files,  fill = TRUE)
+rm(p_files)
+invisible(gc())
+```
+
+One country (Greece) has two different names in the variable storing 
+country codes (PB020). For some years Greece is coded as "GR" and for 
+other years as "EL". To reduce confusion we recode all instances of "GR"
+to "EL".
+
+```{r echo=TRUE, warning=FALSE}
+p_files_all$PB020[p_files_all$PB020=="GR"] <- "EL"
+```
+
+A list of variables is named in uppercase in some years and in lowercase
+in other years. To reduce confusion, these variables are renamed to uppercase.
+
+```{r echo=TRUE, warning=FALSE}
+colnames(p_files_all)[colnames(p_files_all)=="pl030"] <- "PL030"
+colnames(p_files_all)[colnames(p_files_all)=="pl070"] <- "PL070"
+colnames(p_files_all)[colnames(p_files_all)=="pl072"] <- "PL072"
+colnames(p_files_all)[colnames(p_files_all)=="pl030_f"] <- "PL030_F"
+colnames(p_files_all)[colnames(p_files_all)=="pl070_f"] <- "PL070_F"
+colnames(p_files_all)[colnames(p_files_all)=="pl072_f"] <- "PL072_F"
+colnames(p_files_all)[colnames(p_files_all)=="pl110_f"] <- "PL110_F"
+```
+
+Exporting personal file to working directory and temporarily
+removing it from working environment.
+
+```{r echo=TRUE, warning=FALSE}
+saveRDS(p_files_all, "p_files_all.rds")
+rm(p_files_all)
+invisible(gc())
+```
+
+##Merging Personal Register and Personal Files
+
+Uploading personal register (r_files_all) and personal (p_files_all) cumulative files.
+
+```{r echo=TRUE, warning=FALSE}
+r_files_all<-readRDS("r_files_all.rds")
+p_files_all<-readRDS("p_files_all.rds")
+```
+
+Information on Year, Country and Personal ID will be used to merge personal register (r_files_all) 
+and personal (p_files_all) cumulative files. Renaming these variables to have common names in both
+data.tables.
+
+```{r echo=TRUE, warning=FALSE}
+r_files_all<-setnames(r_files_all, old=c("RB010","RB020", "RB030", "RX030"), new=c("Year", "Country", "PID", "HHID"))
+p_files_all<-setnames(p_files_all, old=c("PB010","PB020", "PB030", "PX030"), new=c("Year", "Country", "PID", "HHID"))
+```
+
+Merging personal register and personal files into cumulative file. Removing files used to
+do merging from the working environment.
+
+```{r echo=TRUE, warning=FALSE}
+personal_file <- merge(r_files_all, p_files_all, by = c("Country", "PID", "Year"), all = TRUE)
+rm(r_files_all, p_files_all)
+invisible(gc())
+```
+
+Exporting cumulative personal file to working directory and temporarily
+removing it from working environment.
+
+```{r echo=TRUE, warning=FALSE}
+saveRDS(personal_file, "personal_file.rds")
+rm(personal_file)
+invisible(gc())
+```
+
+#Cumulative EU SILC file
+
+Uploading household and personal cumulative files.
+
+```{r echo=TRUE, warning=FALSE}
+household_file<-readRDS("household_file.rds")
+personal_file<-readRDS("personal_file.rds")
+```
+
+Merging household and personal cumulative files into cumulative file. Removing files used to
+do merging from the working environment.
+
+```{r echo=TRUE, warning=FALSE}
+EU_SILC_Cumulative <- merge(household_file, personal_file, by = c("Country", "HHID", "PID", "Year"), all = TRUE)
+```
+
+```{r echo=TRUE, warning=FALSE}
+saveRDS(EU_SILC_Cumulative, "EU_SILC_Cumulative.rds")
+rm(EU_SILC_Cumulative)
+invisible(gc())
+```
+
