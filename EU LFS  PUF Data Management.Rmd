@@ -22,7 +22,7 @@ lapply(packages, library, character.only = TRUE)
 Setting working directory.
 
 ```{r echo=TRUE, warning=FALSE}
-setwd("/usr/grizezb/LFS/")
+setwd("/home/gricezb/data/LFS/")
 ```
 
 # Creating Cumulative LFS Country Files
@@ -56,7 +56,7 @@ for (i in lfs_files){
   assign(paste0(substr(i, 1, 2), "_files_merged"), rbindlist(get(paste0(substr(i, 1, 2))),  fill = TRUE))
   rm(list = substr(i, 1, 2))
   gc()
-  saveRDS(get(paste0(substr(i, 1, 2), "_files_merged")), paste0("/home/gricezb/data/LFS/", substr(i[1], 1, 2), "_files_merged.rds"))
+  saveRDS(get(paste0(substr(i, 1, 2), "_files_merged")), paste0(substr(i[1], 1, 2), "_files_merged.rds"))
   rm(list=ls(pattern="_files_merged"))
   gc()
   }
