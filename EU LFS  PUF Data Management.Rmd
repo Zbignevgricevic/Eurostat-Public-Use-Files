@@ -74,22 +74,15 @@ cumulative file, it removes it from the Enviroment.
 
 ```{r echo=TRUE, warning=FALSE}
 for (file in lfs_files){
-  
-  # 
-  
-  if (!exists("all_lfs")){
+if (!exists("all_lfs")){
     all_lfs <- NULL
   }
-  
-  # if the merged dataset does exist, append to it
-  
-  if (exists("all_lfs")){
+if (exists("all_lfs")){
     temp_dataset <-readRDS(file)
     all_lfs<-rbindlist(list(all_lfs, temp_dataset), fill=TRUE)
     rm(temp_dataset)
     gc()
-  }
-  
+  } 
 }
 ```
 
