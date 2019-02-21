@@ -1,0 +1,99 @@
+---
+title: "EU LFS Data Management"
+author: "Zbignev Gricevic"
+date: "2/21/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Uploading packages
+
+Uploading pre-installed packages needed for data management of EU SILC public use files.
+
+```{r echo=TRUE, warning=FALSE, message=FALSE}
+packages<-c("data.table")
+lapply(packages, library, character.only = TRUE)
+```
+
+# Working Directory 
+
+Setting working directory.
+
+```{r echo=TRUE, warning=FALSE}
+setwd("/usr/grizezb/LFS/")
+```
+
+# Creating Cumulative LFS Country Files
+
+List of countries to be read in.
+
+```{r echo=TRUE, warning=FALSE}
+#country<-c("AT", "BE", "BG", "CY", "DE", "DK", "EE", "EL", "ES", "FI", "FR", "HU", "IE", "IT", "LT", "LU", "LV", "MT", "NL", "PT", "RO", "SI", "SK")
+country<-c("AT", "BE")
+
+```
+
+Creating list of files to be merged. First of all list for each country is
+created. Then these lists are combined into one large list (lfs_files).
+
+```{r echo=TRUE, warning=FALSE}
+for (i in country){
+  assign(paste0("temp_", i), list.files(pattern = paste0(i, "_LFS_", ".*")))
+}
+lfs_files<-mget(ls(pattern = "temp.*"))
+```
+
+Loop is defined which creates and saves cumulative LFS file for each country.
+We first read files for a specific country. Then we bind all country files into
+one data table ('country code'_files_merged). In the next step we export 
+country files to the .rds format.
+
+```{r echo=TRUE, warning=FALSE}
+for (i in lfs_files){
+  assign(substr(i, 1, 2), lapply(i, fread))
+  assign(paste0(substr(i, 1, 2), "_files_merged"), rbindlist(get(paste0(substr(i, 1, 2))),  fill = TRUE))
+  rm(list = substr(i, 1, 2))
+  gc()
+  saveRDS(get(paste0(substr(i, 1, 2), "_files_merged")), paste0("/home/gricezb/data/LFS/", substr(i[1], 1, 2), "_files_merged.rds"))
+  rm(list=ls(pattern="_files_merged"))
+  gc()
+  }
+```
+
+# Creating Cumulative LFS File
+
+```{r echo=TRUE, warning=FALSE}
+lfs_files <- list.files(pattern = "merged")
+```
+
+Define the loop which uploads and appends country files
+iteratively. After programme appends country file to the 
+cumulative file, it removes it from the Enviroment.
+
+```{r echo=TRUE, warning=FALSE}
+for (file in lfs_files){
+  
+  # 
+  
+  if (!exists("all_lfs")){
+    all_lfs <- NULL
+  }
+  
+  # if the merged dataset does exist, append to it
+  
+  if (exists("all_lfs")){
+    temp_dataset <-readRDS(file)
+    all_lfs<-rbindlist(list(all_lfs, temp_dataset), fill=TRUE)
+    rm(temp_dataset)
+    gc()
+  }
+  
+}
+```
+
+
+```{r echo=TRUE, warning=FALSE}
+table(all_lfs$COUNTRY)
+```
