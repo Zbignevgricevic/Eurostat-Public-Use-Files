@@ -32,7 +32,6 @@ List of countries to be read in.
 ```{r echo=TRUE, warning=FALSE}
 #country<-c("AT", "BE", "BG", "CY", "DE", "DK", "EE", "EL", "ES", "FI", "FR", "HU", "IE", "IT", "LT", "LU", "LV", "MT", "NL", "PT", "RO", "SI", "SK")
 country<-c("AT", "BE")
-
 ```
 
 Creating list of files to be merged. First of all list for each country is
