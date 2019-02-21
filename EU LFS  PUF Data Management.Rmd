@@ -60,13 +60,11 @@ for (i in lfs_files){
   gc()
   }
 ```
-
 # Creating Cumulative LFS File
 
 ```{r echo=TRUE, warning=FALSE}
 lfs_files <- list.files(pattern = "merged")
 ```
-
 Define the loop which uploads and appends country files
 iteratively. After programme appends country file to the 
 cumulative file, it removes it from the Enviroment.
@@ -84,7 +82,7 @@ if (exists("all_lfs")){
   } 
 }
 ```
-
+Cross-check observations per country.
 
 ```{r echo=TRUE, warning=FALSE}
 table(all_lfs$COUNTRY)
