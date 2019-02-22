@@ -231,7 +231,7 @@ in other years. To reduce confusion, these variables are renamed to uppercase.
 ```{r echo=TRUE, warning=FALSE, message=FALSE}
 old_names_p<-c("pl030", "pl070", "rl072", "pl030_f", "pl070_f", "pl072_f", "pl110_f")
 new_names_p<-toupper(old_names_p)
-r_files<-lapply(r_files, setnames, old_names_p, new_names_p, skip_absent=TRUE)
+p_files<-lapply(p_files, setnames, old_names_p, new_names_p, skip_absent=TRUE)
 rm(new_names_p, old_names_p)
 gc()
 ```
