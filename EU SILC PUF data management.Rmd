@@ -171,6 +171,17 @@ rm(list=ls(pattern="r_EUSILC.csv"), temp_r)
 invisible(gc())
 ```
 
+A list of variables is named in uppercase in some years and in lowercase
+in other years. To reduce confusion, these variables are renamed to uppercase.
+
+```{r echo=TRUE, warning=FALSE, message=FALSE}
+old_names_r<-c("rl010", "rl020", "rl030", "rl040", "rl050", "rl060", "rl070", "rl010_f", "rl020_f", "rl030_f", "rl040_f", "rl050_f", "rl060_f", "rl070_f")
+new_names_r<-toupper(old_names_r)
+r_files<-lapply(r_files, setnames, old_names_r, new_names_r, skip_absent=TRUE)
+rm(new_names_r, old_names_r)
+gc()
+```
+
 Appending list of household register files (r_files) into single 
 data table (r_files_all). Removing list of files from the working
 environment.
@@ -188,26 +199,6 @@ to "EL".
 
 ```{r echo=TRUE, warning=FALSE}
 r_files_all$RB020[r_files_all$RB020=="GR"] <- "EL"
-```
-
-A list of variables is named in uppercase in some years and in lowercase
-in other years. To reduce confusion, these variables are renamed to uppercase.
-
-```{r echo=TRUE, warning=FALSE}
-colnames(r_files_all)[colnames(r_files_all)=="rl010"] <- "RL010"
-colnames(r_files_all)[colnames(r_files_all)=="rl020"] <- "RL020"
-colnames(r_files_all)[colnames(r_files_all)=="rl030"] <- "RL030"
-colnames(r_files_all)[colnames(r_files_all)=="rl040"] <- "RL040"
-colnames(r_files_all)[colnames(r_files_all)=="rl050"] <- "RL050"
-colnames(r_files_all)[colnames(r_files_all)=="rl060"] <- "RL060"
-colnames(r_files_all)[colnames(r_files_all)=="rl070"] <- "RL070"
-colnames(r_files_all)[colnames(r_files_all)=="rl010_f"] <- "RL010_F"
-colnames(r_files_all)[colnames(r_files_all)=="rl020_f"] <- "RL020_F"
-colnames(r_files_all)[colnames(r_files_all)=="rl030_f"] <- "RL030_F"
-colnames(r_files_all)[colnames(r_files_all)=="rl040_f"] <- "RL040_F"
-colnames(r_files_all)[colnames(r_files_all)=="rl050_f"] <- "RL050_F"
-colnames(r_files_all)[colnames(r_files_all)=="rl060_f"] <- "RL060_F"
-colnames(r_files_all)[colnames(r_files_all)=="rl070_f"] <- "RL070_F"
 ```
 
 Exporting household register file to working directory and temporarily
@@ -234,6 +225,17 @@ rm(list=ls(pattern="p_EUSILC.csv"), temp_p)
 invisible(gc())
 ```
 
+A list of variables is named in uppercase in some years and in lowercase
+in other years. To reduce confusion, these variables are renamed to uppercase.
+
+```{r echo=TRUE, warning=FALSE, message=FALSE}
+old_names_p<-c("pl030", "pl070", "rl072", "pl030_f", "pl070_f", "pl072_f", "pl110_f")
+new_names_p<-toupper(old_names_p)
+r_files<-lapply(r_files, setnames, old_names_p, new_names_p, skip_absent=TRUE)
+rm(new_names_p, old_names_p)
+gc()
+```
+
 Appending list of personal files (p_files) into single 
 data table (p_files_all). Removing list of files from the working
 environment.
@@ -251,19 +253,6 @@ to "EL".
 
 ```{r echo=TRUE, warning=FALSE}
 p_files_all$PB020[p_files_all$PB020=="GR"] <- "EL"
-```
-
-A list of variables is named in uppercase in some years and in lowercase
-in other years. To reduce confusion, these variables are renamed to uppercase.
-
-```{r echo=TRUE, warning=FALSE}
-colnames(p_files_all)[colnames(p_files_all)=="pl030"] <- "PL030"
-colnames(p_files_all)[colnames(p_files_all)=="pl070"] <- "PL070"
-colnames(p_files_all)[colnames(p_files_all)=="pl072"] <- "PL072"
-colnames(p_files_all)[colnames(p_files_all)=="pl030_f"] <- "PL030_F"
-colnames(p_files_all)[colnames(p_files_all)=="pl070_f"] <- "PL070_F"
-colnames(p_files_all)[colnames(p_files_all)=="pl072_f"] <- "PL072_F"
-colnames(p_files_all)[colnames(p_files_all)=="pl110_f"] <- "PL110_F"
 ```
 
 Exporting personal file to working directory and temporarily
