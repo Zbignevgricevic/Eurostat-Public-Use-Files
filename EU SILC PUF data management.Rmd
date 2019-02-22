@@ -1,7 +1,7 @@
 ---
 title: "EU SILC PUF Data Management"
 author: "Zbignev Gricevic"
-date: "19 février 2019"
+date: "19 fÃ©vrier 2019"
 output: html_document
 ---
 
@@ -286,7 +286,7 @@ Merging personal register and personal files into cumulative file. Removing file
 do merging from the working environment.
 
 ```{r echo=TRUE, warning=FALSE}
-personal_file <- merge(r_files_all, p_files_all, by = c("Country", "PID", "Year"), all = TRUE)
+personal_file <- merge(r_files_all, p_files_all, by = c("Country", "PID", "HHID", "Year"), all = TRUE)
 rm(r_files_all, p_files_all)
 invisible(gc())
 ```
@@ -313,7 +313,7 @@ Merging household and personal cumulative files into cumulative file. Removing f
 do merging from the working environment.
 
 ```{r echo=TRUE, warning=FALSE}
-EU_SILC_Cumulative <- merge(household_file, personal_file, by = c("Country", "HHID", "PID", "Year"), all = TRUE)
+EU_SILC_Cumulative <- merge(personal_file, household_file, by = c("Country", "HHID", "Year"), all = TRUE)
 ```
 
 ```{r echo=TRUE, warning=FALSE}
@@ -322,3 +322,30 @@ rm(EU_SILC_Cumulative)
 invisible(gc())
 ```
 
+#Cumulative EU SILC Country files
+
+```{r echo=TRUE, warning=FALSE}
+EU_SILC_Cumulative<-readRDS("EU_SILC_Cumulative.rds")
+EU_SILC_Cumulative_country<-split(EU_SILC_Cumulative, EU_SILC_Cumulative$Country)
+country<-names(EU_SILC_Cumulative_country)
+rm(EU_SILC_Cumulative)
+invisible(gc())
+list2env(EU_SILC_Cumulative_country, envir=.GlobalEnv)
+rm(EU_SILC_Cumulative_country)
+invisible(gc())
+for (i in country) {saveRDS(get(i), paste0(i, "_merged.rds"))}
+```
+
+#Cumulative EU SILC Year files
+
+```{r echo=TRUE, warning=FALSE}
+EU_SILC_Cumulative<-readRDS("EU_SILC_Cumulative.rds")
+EU_SILC_Cumulative_year<-split(EU_SILC_Cumulative, EU_SILC_Cumulative$Year)
+year<-names(EU_SILC_Cumulative_year)
+rm(EU_SILC_Cumulative)
+gc()
+list2env(EU_SILC_Cumulative_year, envir=.GlobalEnv)
+rm(EU_SILC_Cumulative_year)
+gc()
+for (i in year) {saveRDS(get(i), paste0(i, "_merged.rds"))}
+```
