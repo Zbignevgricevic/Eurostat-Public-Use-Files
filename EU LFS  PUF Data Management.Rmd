@@ -30,8 +30,7 @@ setwd("/home/gricezb/data/LFS/")
 List of countries to be read in.
 
 ```{r echo=TRUE, warning=FALSE}
-#country<-c("AT", "BE", "BG", "CY", "DE", "DK", "EE", "EL", "ES", "FI", "FR", "HU", "IE", "IT", "LT", "LU", "LV", "MT", "NL", "PT", "RO", "SI", "SK")
-country<-c("AT", "BE")
+country<-c("AT", "BE", "BG", "CY", "DE", "DK", "EE", "EL", "ES", "FI", "FR", "HU", "IE", "IT", "LT", "LU", "LV", "MT", "NL", "PT", "RO", "SI", "SK")
 ```
 
 Creating list of files to be merged. First of all list for each country is
@@ -43,6 +42,8 @@ for (i in country){
 }
 lfs_files<-mget(ls(pattern = "temp.*"))
 ```
+
+# Creating Cumulative LFS Country files
 
 Loop is defined which creates and saves cumulative LFS file for each country.
 We first read files for a specific country. Then we bind all country files into
@@ -60,7 +61,7 @@ for (i in lfs_files){
   gc()
   }
 ```
-# Creating Cumulative LFS File
+# Creating Cumulative LFS file
 
 ```{r echo=TRUE, warning=FALSE}
 lfs_files <- list.files(pattern = "merged")
