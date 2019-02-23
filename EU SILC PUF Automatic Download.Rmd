@@ -1,0 +1,38 @@
+---
+title: "Untitled"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Downloading EU-SILC Public Use micro-data files
+
+The following code downloads zipped EU-SILC Public Use micro-data files. We first select years
+and countries needed for the creation of the cumulative files.
+
+```{r echo=TRUE, warning=FALSE, message=FALSE}
+year<-c(2004:2013)
+country<-c("CZ", "AT", "BE", "BG", "CZ", "SI",
+           "CY", "HR", "PL", "SE", "UK", "DE", 
+           "DK", "EE", "EL", "RO", "ES", "FI", 
+           "FR", "HU", "SK", "IE", "IT", "LT", 
+           "LU", "LV", "MT", "NL", "PT")
+```
+
+Then we define for loop which downloads zipped EU-SILC Public Use micro-data files from the repository online.
+
+```{r echo=TRUE, warning=FALSE, message=FALSE}
+for (i in country){
+      for (j in year){
+        tryCatch(      
+          download.file(
+                  paste0("https://ec.europa.eu/eurostat/cache/microdata/eusilc/", i, "_", j, "_EUSILC.zip"),
+                  paste0("C:/Users/Dell/Downloads/eusilc/", i, "_", j, "_EUSILC.zip")
+                        ),
+                      error = function(e) print(paste0("File ", i, "_", j, "_EUSILC.zip does not exist")))
+                      }
+                  }
+
+```
