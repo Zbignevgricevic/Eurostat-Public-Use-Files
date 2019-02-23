@@ -4,12 +4,12 @@ This repository stores R code used to produce cumulative versions of EU-SILC and
 
 ## EU-SILC
 
-Individual EU-SILC public use files are stored here: https://ec.europa.eu/eurostat/web/microdata/statistics-on-income-and-living-conditions
+Individual EU-SILC public use files are stored ---> https://ec.europa.eu/eurostat/web/microdata/statistics-on-income-and-living-conditions
 
-Comprehensive EU-SILC documentation can be found here: https://www.gesis.org/en/missy/materials/EU-SILC/documents/guidelines
+Comprehensive EU-SILC documentation can be found ---> https://www.gesis.org/en/missy/materials/EU-SILC/documents/guidelines
 
 ## EU-LFS
 
-Individual EU-LFS public use files are stored: https://ec.europa.eu/eurostat/web/microdata/labour-force-survey
+Individual EU-LFS public use files are stored ---> https://ec.europa.eu/eurostat/web/microdata/labour-force-survey
 
-Comprehensive EU-LFS documentation can be found here: https://www.gesis.org/en/missy/metadata/EU-LFS/
+Comprehensive EU-LFS documentation can be found ---> https://www.gesis.org/en/missy/metadata/EU-LFS/
