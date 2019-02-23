@@ -300,7 +300,11 @@ rm(personal_file)
 invisible(gc())
 ```
 
-#Cumulative EU SILC file
+#Cumulative files
+
+Creating cumulative EU-SILC files.
+
+##Cumulative EU SILC file
 
 Uploading household and personal cumulative files.
 
@@ -324,7 +328,7 @@ rm(EU_SILC_Cumulative)
 invisible(gc())
 ```
 
-#Cumulative EU SILC Country files
+##Cumulative EU SILC Country files
 
 Spliting Cumulative file into separate country files.
 Exporting cumulative country files.
@@ -341,7 +345,7 @@ invisible(gc())
 for (i in country) {saveRDS(get(i), paste0(i, "_merged.rds"))}
 ```
 
-#Cumulative EU SILC Year files
+##Cumulative EU SILC Year files
 
 Spliting Cumulative file into separate yearly files.
 Exporting cumulative yearly files.
