@@ -315,14 +315,19 @@ do merging from the working environment.
 ```{r echo=TRUE, warning=FALSE}
 EU_SILC_Cumulative <- merge(personal_file, household_file, by = c("Country", "HHID", "Year"), all = TRUE)
 ```
+Exporting cumulative file.
 
 ```{r echo=TRUE, warning=FALSE}
 saveRDS(EU_SILC_Cumulative, "EU_SILC_Cumulative.rds")
+#write.csv(EU_SILC_Cumulative, "EU_SILC_Cumulative.csv")
 rm(EU_SILC_Cumulative)
 invisible(gc())
 ```
 
 #Cumulative EU SILC Country files
+
+Spliting Cumulative file into separate country files.
+Exporting cumulative country files.
 
 ```{r echo=TRUE, warning=FALSE}
 EU_SILC_Cumulative<-readRDS("EU_SILC_Cumulative.rds")
@@ -338,6 +343,9 @@ for (i in country) {saveRDS(get(i), paste0(i, "_merged.rds"))}
 
 #Cumulative EU SILC Year files
 
+Spliting Cumulative file into separate yearly files.
+Exporting cumulative yearly files.
+
 ```{r echo=TRUE, warning=FALSE}
 EU_SILC_Cumulative<-readRDS("EU_SILC_Cumulative.rds")
 EU_SILC_Cumulative_year<-split(EU_SILC_Cumulative, EU_SILC_Cumulative$Year)
@@ -348,4 +356,5 @@ list2env(EU_SILC_Cumulative_year, envir=.GlobalEnv)
 rm(EU_SILC_Cumulative_year)
 gc()
 for (i in year) {saveRDS(get(i), paste0(i, "_merged.rds"))}
+#for (i in year) {saveRDS(get(i), paste0(i, "_merged.csv"))}
 ```
