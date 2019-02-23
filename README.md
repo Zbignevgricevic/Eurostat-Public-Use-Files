@@ -4,7 +4,7 @@ This repository stores R code used to produce cumulative versions of EU-SILC and
 
 ## EU-SILC
 
-Individual EU-SILC public use files are stored [on the Eurostat website](https://ec.europa.eu/eurostat/web/microdata/statistics-on-income-and-living-conditions). Number of files is rather large. Therefore rather large operative memory is needed in order to produce cumulative files containing all the countries.
+Individual EU-SILC public use files are stored [on the Eurostat website](https://ec.europa.eu/eurostat/web/microdata/statistics-on-income-and-living-conditions). Combined size of all the files is rather large. Therefore rather large operative memory is needed in order to produce cumulative files containing all the countries.
 
 This repository stores R code for:
 
@@ -15,7 +15,9 @@ Comprehensive EU-SILC documentation can be found [on the GESIS website](https://
 
 ## EU-LFS
 
-Individual EU-LFS public use files are stored [on the Eurostat website](https://ec.europa.eu/eurostat/web/microdata/labour-force-survey). Number of files is rather large. Therefore rather large operative memory is needed in order to produce cumulative files containing all the countries. This repository stores R code for:
+Individual EU-LFS public use files are stored [on the Eurostat website](https://ec.europa.eu/eurostat/web/microdata/labour-force-survey). Combined size of all the files is rather large. Therefore rather large operative memory is needed in order to produce cumulative files containing all the countries. 
+
+This repository stores R code for:
 
 * [Automatic download of the files]().
 * [Creating Cumulative versions of the files](https://github.com/Zbignevgricevic/Eurostat-Public-Use-Files/blob/master/EU%20LFS%20%20PUF%20Data%20Management.Rmd).
