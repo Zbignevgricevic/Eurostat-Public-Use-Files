@@ -13,7 +13,7 @@ Comprehensive EU-SILC documentation can be found [on the GESIS website](https://
 
 ## EU-LFS
 
-Individual EU-LFS public use files are stored [on the Eurostat website](https://ec.europa.eu/eurostat/web/microdata/labour-force-survey).
+Individual EU-LFS public use files are stored [on the Eurostat website](https://ec.europa.eu/eurostat/web/microdata/labour-force-survey). This repository stores R code for:
 
 * [Automatic download of the files]().
 * [Creating Cumulative versions of the files](https://github.com/Zbignevgricevic/Eurostat-Public-Use-Files/blob/master/EU%20SILC%20PUF%20data%20management.Rmd).
