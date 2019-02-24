@@ -19,7 +19,7 @@ Individual EU-LFS public use files are stored [on the Eurostat website](https://
 
 This repository stores R code for:
 
-* [Automatic download of the files]().
+* [Automatic download of the files](EU%20LFS%20PUF%20Automatic%20Download.Rmd).
 * [Creating Cumulative versions of the files](https://github.com/Zbignevgricevic/Eurostat-Public-Use-Files/blob/master/EU%20LFS%20%20PUF%20Data%20Management.Rmd).
 
 Comprehensive EU-LFS documentation can be found [on the GESIS website](https://www.gesis.org/en/missy/metadata/EU-LFS/)
