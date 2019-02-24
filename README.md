@@ -4,7 +4,7 @@ This repository stores R code used to produce cumulative versions of EU-SILC and
 
 ## EU-SILC
 
-Individual EU-SILC public use files are stored [on the Eurostat website](https://ec.europa.eu/eurostat/web/microdata/statistics-on-income-and-living-conditions). Combined size of all the files is rather large. Therefore rather large operative memory is needed in order to produce cumulative files containing all the countries and years.
+Individual EU-SILC public use files are stored [on the Eurostat website](https://ec.europa.eu/eurostat/web/microdata/statistics-on-income-and-living-conditions). Combined size of all the files is rather large (1.8 GB). Therefore rather large operative memory is needed in order to produce cumulative files containing all the countries and years.
 
 This repository stores R code for:
 
