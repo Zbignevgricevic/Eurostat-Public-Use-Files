@@ -15,7 +15,7 @@ Comprehensive EU-SILC documentation can be found [on the GESIS website](https://
 
 ## EU-LFS
 
-Individual EU-LFS public use files are stored [on the Eurostat website](https://ec.europa.eu/eurostat/web/microdata/labour-force-survey). Combined size of all the files is rather large. (around 20 GB). Therefore rather large operative memory is needed in order to produce cumulative files containing all the countries and years. 
+Individual EU-LFS public use files are stored [on the Eurostat website](https://ec.europa.eu/eurostat/web/microdata/labour-force-survey). Combined size of all the files is rather large. Therefore rather large operative memory is needed in order to produce cumulative files containing all the countries and years. 
 
 This repository stores R code for:
 
