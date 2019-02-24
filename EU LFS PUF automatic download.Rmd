@@ -1,0 +1,41 @@
+---
+title: "EU LFS PUF Automatic Download"
+author: "Zbignev Gricevic"
+date: "23 Februar 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Downloading EU-LFS Public Use micro-data files
+
+The following code downloads zipped EU-LFS Public Use micro-data files. We first select years
+and countries needed for the creation of the cumulative files.
+
+```{r echo=TRUE, warning=FALSE, message=FALSE}
+year<-c(2004:2013)
+country<-c("CZ", "AT", "BE", "BG", "CZ", "SI",
+           "CY", "HR", "PL", "SE", "UK", "DE", 
+           "DK", "EE", "EL", "RO", "ES", "FI", 
+           "FR", "HU", "SK", "IE", "IT", "LT", 
+           "LU", "LV", "MT", "NL", "PT", "IS",
+           "LI", "NO", "CH")
+```
+
+Then we define for loop which downloads zipped EU-SILC Public Use micro-data files from the repository online.
+
+```{r echo=TRUE, warning=FALSE, message=FALSE}
+for (i in country){
+      for (j in year){
+        tryCatch(      
+          download.file(
+                  paste0("https://ec.europa.eu/eurostat/cache/microdata/lfs/", i, "_", j, "_LFS.zip"),
+                  paste0("C:/Users/Dell/Downloads/eusilc/", i, "_", j, "_LFS.zip")
+                        ),
+                      error = function(e) print(paste0("File ", i, "_", j, "_LFS.zip does not exist")))
+                      }
+                  }
+
+```
