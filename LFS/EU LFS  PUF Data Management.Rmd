@@ -86,7 +86,9 @@ for (i in lfs_files){
   rm(list = substr(i, 1, 2))
   gc()
   saveRDS(get(paste0(substr(i, 8, 11), "_files_merged")), paste0(substr(i[1], 8, 11), "_files_merged.rds"))
+  write.csv(get(paste0(substr(i, 8, 11), "_files_merged")), paste0(substr(i[1], 8, 11), "_files_merged.csv"))
   rm(list=ls(pattern="_files_merged"))
+  rm(list=ls(pattern="20"))
   gc()
 }
 ```
