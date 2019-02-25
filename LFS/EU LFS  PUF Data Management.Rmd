@@ -47,7 +47,7 @@ lfs_files<-mget(ls(pattern = "temp.*"))
 
 Loop is defined which creates and saves cumulative LFS file for each country.
 We first read files for a specific country. Then we bind all country files into
-one data table ('country code'_files_merged). In the next step we export 
+one data table (country code_files_merged). In the next step we export 
 country files to the .rds format.
 
 ```{r echo=TRUE, warning=FALSE}
