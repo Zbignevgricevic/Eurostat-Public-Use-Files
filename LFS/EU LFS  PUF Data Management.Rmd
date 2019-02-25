@@ -31,7 +31,10 @@ List of countries to be read in.
 
 ```{r echo=TRUE, warning=FALSE}
 country<-c("AT", "BE", "BG", "CY", "DE", "DK", "EE", "EL", "ES", "FI", "FR", "HU", "IE", "IT", "LT", "LU", "LV", "MT", "NL", "PT", "RO", "SI", "SK")
+year<-c(2004:2013)
 ```
+
+# Creating Cumulative LFS Country files
 
 Creating list of files to be merged. First of all list for each country is
 created. Then these lists are combined into one large list (lfs_files).
@@ -43,12 +46,10 @@ for (i in country){
 lfs_files<-mget(ls(pattern = "temp.*"))
 ```
 
-# Creating Cumulative LFS Country files
-
 Loop is defined which creates and saves cumulative LFS file for each country.
 We first read files for a specific country. Then we bind all country files into
 one data table (country code_files_merged). In the next step we export 
-country files to the .rds format.
+country files to the .rds and .csv formats.
 
 ```{r echo=TRUE, warning=FALSE}
 for (i in lfs_files){
@@ -61,6 +62,36 @@ for (i in lfs_files){
   gc()
   }
 ```
+
+# Creating Cumulative LFS Yearly files
+
+Creating list of files to be merged. First of all list for each year is
+created. Then these lists are combined into one large list (lfs_files).
+
+```{r echo=TRUE, warning=FALSE}
+for (i in year){
+  assign(paste0("temp_", i), list.files(pattern = paste0("*", "_LFS_", i , ".*")))
+}
+lfs_files<-mget(ls(pattern = "temp.*"))
+```
+
+Loop is defined which creates and saves cumulative LFS file for each year.
+We first read files for a specific year. Then we bind all year files into
+one data table (year code_files_merged). In the next step we export 
+yearly files to the .rds and .csv format.
+
+```{r echo=TRUE, warning=FALSE}
+for (i in lfs_files){
+  assign(substr(i, 8, 11), lapply(i, fread))
+  assign(paste0(substr(i, 8, 11), "_files_merged"), rbindlist(get(paste0(substr(i, 8, 11))),  fill = TRUE))
+  rm(list = substr(i, 1, 2))
+  gc()
+  saveRDS(get(paste0(substr(i, 8, 11), "_files_merged")), paste0(substr(i[1], 8, 11), "_files_merged.rds"))
+  rm(list=ls(pattern="_files_merged"))
+  gc()
+}
+```
+
 # Creating Cumulative LFS file
 
 ```{r echo=TRUE, warning=FALSE}
