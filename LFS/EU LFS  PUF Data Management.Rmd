@@ -13,8 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 Uploading pre-installed packages needed for data management of EU SILC public use files.
 
 ```{r echo=TRUE, warning=FALSE, message=FALSE}
-packages<-c("data.table")
-lapply(packages, library, character.only = TRUE)
+library(data.table)
 ```
 
 # Working Directory 
