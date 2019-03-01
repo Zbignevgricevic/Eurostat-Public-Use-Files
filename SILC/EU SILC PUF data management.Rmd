@@ -138,7 +138,7 @@ Merging household register and household files into cumulative file. Removing fi
 do merging from the working environment.
 
 ```{r echo=TRUE, warning=FALSE}
-household_file <- merge(d_files_all, h_files_all, by = c("Country", "HHID", "Year"), all = TRUE)
+household_file <- merge(d_files_all, h_files_all, by = c("Country", "Year", "HHID"), all = TRUE)
 rm(d_files_all, h_files_all)
 invisible(gc())
 ```
@@ -286,7 +286,7 @@ Merging personal register and personal files into cumulative file. Removing file
 do merging from the working environment.
 
 ```{r echo=TRUE, warning=FALSE}
-personal_file <- merge(r_files_all, p_files_all, by = c("Country", "PID", "HHID", "Year"), all = TRUE)
+personal_file <- merge(r_files_all, p_files_all, by = c("Country", "Year", "HHID", "PID"), all = TRUE)
 rm(r_files_all, p_files_all)
 invisible(gc())
 ```
