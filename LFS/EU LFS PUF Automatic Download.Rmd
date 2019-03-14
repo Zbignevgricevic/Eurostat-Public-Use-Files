@@ -32,7 +32,7 @@ for (i in country){
         tryCatch(      
           download.file(
                   paste0("https://ec.europa.eu/eurostat/cache/microdata/lfs/", i, "_", j, "_LFS.zip"),
-                  paste0("C:/Users/Dell/Downloads/eusilc/", i, "_", j, "_LFS.zip")
+                  paste0("C:/Users/Dell/Downloads/lfs/", i, "_", j, "_LFS.zip")
                         ),
                       error = function(e) print(paste0("File ", i, "_", j, "_LFS.zip does not exist")))
                       }
